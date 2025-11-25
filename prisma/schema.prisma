@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CULTURAL_PARTNER
+  LICENSE_BUYER
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id                          String             @id @default(auto()) @map("_id") @db.ObjectId
+  email                       String             @unique
+  password                    String
+  fullName                    String?
+  phone                       String?
+  role                        Role               @default(LICENSE_BUYER)
+  companyName                 String?            // for license buyers
+  industry                    String?            // for license buyers
+  companyAddress              String?
+  companyWebsite              String?
+  companyRegistrationNumber   String?
+  // document URLs: store uploaded document URLs directly on `User` as nullable fields
+  buktiKemitraan              String?
+  dokumenLegal                String?
+  suratPernyataanIp           String?
+  dokumenKYC                  String?
+  dokumenBilling              String?
+  dokumenPajak                String?
+  verificationStatus          VerificationStatus @default(PENDING)
+  emailVerifiedAt             DateTime?
+  createdAt                   DateTime           @default(now())
+  updatedAt                   DateTime?          @updatedAt
+}
+
+// Document model removed: document metadata is stored directly on `User` as nullable fields.

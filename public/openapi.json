@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BudayaGo Auth API (dev)",
+    "version": "1.0.0",
+    "description": "Minimal OpenAPI spec for testing register/login endpoints with Swagger UI."
+  },
+  "servers": [
+    { "url": "/" }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" },
+                  "fullName": { "type": "string" },
+                  "nomorTelepon": { "type": "string" },
+                  "role": { "type": "string", "enum": ["CULTURAL_PARTNER","LICENSE_BUYER","ADMIN"] },
+                  "companyProfile": {
+                    "type": "object",
+                    "properties": {
+                      "namaPerusahaan": { "type": "string" },
+                      "jenisIndustri": { "type": "string" },
+                      "alamatPerusahaan": { "type": "string" },
+                      "situsPerusahaan": { "type": "string", "format": "uri" },
+                      "nomorRegistrasiPerusahaan": { "type": "string" },
+                      "companyName": { "type": "string" },
+                      "industry": { "type": "string" },
+                      "companyAddress": { "type": "string" },
+                      "companyWebsite": { "type": "string", "format": "uri" },
+                      "companyRegistrationNumber": { "type": "string" }
+                    }
+                  },
+                  "documents": {
+                    "type": "object",
+                    "properties": {
+                      "buktiKemitraanBudaya": {
+                        "type": "object",
+                        "properties": {
+                          "filename": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" },
+                          "required": { "type": "boolean" }
+                        }
+                      },
+                      "dokumenLegal": {
+                        "type": "object",
+                        "properties": {
+                          "filename": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" },
+                          "required": { "type": "boolean" }
+                        }
+                      },
+                      "suratPernyataanIP": {
+                        "type": "object",
+                        "properties": {
+                          "filename": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" },
+                          "required": { "type": "boolean" }
+                        }
+                      },
+                      "dokumenKYC": {
+                        "type": "object",
+                        "properties": {
+                          "filename": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" },
+                          "required": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": ["email","password"]
+              },
+              "examples": {
+                "licenseBuyer": {
+                  "summary": "License buyer example",
+                  "value": {
+                    "email": "buyer@example.com",
+                    "password": "strongPassword123",
+                    "fullName": "Nama PIC",
+                    "nomorTelepon": "08123456789",
+                    "role": "LICENSE_BUYER",
+                    "companyProfile": {
+                      "namaPerusahaan": "PT Contoh Studio",
+                      "jenisIndustri": "game",
+                      "alamatPerusahaan": "Jl. Contoh No.1, Jakarta",
+                      "situsPerusahaan": "https://contohstudio.example",
+                      "nomorRegistrasiPerusahaan": "123456789"
+                    },
+                    "documents": {}
+                  }
+                },
+                "admin": {
+                  "summary": "Admin user example",
+                  "value": {
+                    "email": "admin@example.com",
+                    "password": "SuperSecretAdmin123",
+                    "fullName": "Admin Super",
+                    "nomorTelepon": "081199988776",
+                    "role": "ADMIN",
+                    "companyProfile": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "409": { "description": "Conflict - email exists" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email","password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "OK" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    }
+  }
+}
