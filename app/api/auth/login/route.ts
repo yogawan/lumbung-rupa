@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import userService from '../../../../services/userService'
-import authService from '../../../../services/authService'
+import userService from '@/services/userService'
+import authService from '@/services/authService'
 
 export async function POST(req: Request) {
   try {
