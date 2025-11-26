@@ -5,6 +5,8 @@ import {
   SendMessageRequest,
   SendMessageResponse,
   GetHistoryResponse,
+  GenerateImageRequest,
+  GenerateImageResponse,
 } from '@/types/rupagen';
 
 const API_BASE_URL = 'https://rupagen-llm-service.vercel.app/api/dino/llm';
@@ -110,4 +112,24 @@ export function parseAssistantContent(content: string): string {
   } catch {
     return content;
   }
+}
+
+/**
+ * Generate image from text prompt
+ */
+export async function generateImage(prompt: string): Promise<GenerateImageResponse> {
+  const response = await fetch('https://overcontentiously-recordless-chun.ngrok-free.dev/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': '69420',
+    },
+    body: JSON.stringify({ prompt }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to generate image: ${response.statusText}`);
+  }
+
+  return await response.json();
 }

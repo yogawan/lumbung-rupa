@@ -49,3 +49,12 @@ export interface GetHistoryResponse {
   message: string;
   data: ChatHistory;
 }
+
+// Image Generation API Types
+export interface GenerateImageRequest {
+  prompt: string;
+}
+
+export interface GenerateImageResponse {
+  url: string;
+}
